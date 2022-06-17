@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { CreateUserComponent } from '../../dialogs/create-user/create-user.component';
+import { RemoveUserComponent } from '../../dialogs/remove-user/remove-user.component';
 import { User } from '../../models/Users.model';
 import { UsersService } from '../../services/users.service';
 
@@ -54,16 +55,27 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  onRemoveUser(id: number): void {
-    this.usersService
-      .removeUser(id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        if (this.users?.length > 0) {
-          const userIndex = this.users.findIndex((user) => user.id === id);
-          this.users.splice(userIndex, 1);
-          this.users = [...this.users];
-        }
-      });
+  onRemoveUser(user: User): void {
+    const dialogRef = this.dialog.open(RemoveUserComponent, {
+      width: '450px',
+      data: user,
+    });
+
+    dialogRef.afterClosed().subscribe((remove) => {
+      if (!remove) return;
+
+      this.usersService
+        .removeUser(user.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          if (this.users?.length > 0) {
+            const userIndex = this.users.findIndex(
+              (user) => user.id === user.id
+            );
+            this.users.splice(userIndex, 1);
+            this.users = [...this.users];
+          }
+        });
+    });
   }
 }

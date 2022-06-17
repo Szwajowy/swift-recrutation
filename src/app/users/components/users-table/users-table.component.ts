@@ -40,7 +40,7 @@ export class UsersTableComponent implements OnInit {
     this.dataSource.data = data;
   }
 
-  @Output() removeUser: EventEmitter<number> = new EventEmitter();
+  @Output() removeUser: EventEmitter<User> = new EventEmitter();
 
   constructor() {}
 
@@ -51,7 +51,7 @@ export class UsersTableComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  onRemoveUser(id: number): void {
-    this.removeUser.emit(id);
+  onRemoveUser(user: User): void {
+    this.removeUser.emit(user);
   }
 }

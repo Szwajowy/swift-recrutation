@@ -15,9 +15,10 @@ import { UsersTableComponent } from './components/users-table/users-table.compon
 import { UsersComponent } from './pages/users/users.component';
 import { CreateUserComponent } from './dialogs/create-user/create-user.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RemoveUserComponent } from './dialogs/remove-user/remove-user.component';
 
 @NgModule({
-  declarations: [UsersTableComponent, UsersComponent, CreateUserComponent],
+  declarations: [UsersTableComponent, UsersComponent, CreateUserComponent, RemoveUserComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

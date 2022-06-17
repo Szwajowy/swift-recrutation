@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Remove user</h1>
+<div mat-dialog-content>
+  <p>Are you sure that you want to remove this user?</p>
+  <ul>
+    <li>Name: {{ data.name }}</li>
+    <li>Email: {{ data.email }}</li>
+    <li>City: {{ data.city }}</li>
+    <li>Region: {{ data.region }}</li>
+    <li>Country: {{ data.country }}</li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Remove</button>
+</div>
