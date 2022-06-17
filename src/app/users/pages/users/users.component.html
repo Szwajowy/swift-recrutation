@@ -5,9 +5,12 @@
   <button mat-raised-button color="accent" (click)="onAddUser()">
     Add user
   </button>
-  <button mat-raised-button color="warn">Remove user</button>
 </div>
 <div class="content">
-  <app-users-table *ngIf="users" [data]="users"></app-users-table>
+  <app-users-table
+    *ngIf="users"
+    [data]="users"
+    (removeUser)="onRemoveUser($event)"
+  ></app-users-table>
   <mat-spinner class="center-spinner" *ngIf="loading"></mat-spinner>
 </div>

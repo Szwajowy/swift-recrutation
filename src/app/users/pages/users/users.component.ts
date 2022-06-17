@@ -40,14 +40,29 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((data) => {
-      if (this.users?.length > 0) {
-        this.users.push(data);
-      }
+      if (!data) return;
 
       this.usersService
         .createUser(data)
         .pipe(takeUntil(this.destroy$))
-        .subscribe();
+        .subscribe(() => {
+          if (this.users?.length > 0) {
+            this.users.push(data);
+          }
+        });
     });
+  }
+
+  onRemoveUser(id: number): void {
+    console.log(id);
+    this.usersService
+      .removeUser(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        if (this.users?.length > 0) {
+          const userIndex = this.users.findIndex((user) => user.id === id);
+          this.users.splice(userIndex, 1);
+        }
+      });
   }
 }

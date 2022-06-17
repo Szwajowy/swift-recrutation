@@ -36,6 +36,21 @@
       <td mat-cell *matCellDef="let element">{{ element.country }}</td>
     </ng-container>
 
+    <!-- Acions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Example icon button with a heart icon"
+          (click)="onRemoveUser(element.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>

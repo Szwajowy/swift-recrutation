@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,6 +26,7 @@ export class UsersTableComponent implements OnInit {
     'city',
     'region',
     'country',
+    'actions',
   ];
   dataSource = new MatTableDataSource<User>();
   pageSizeOptions: number[] = [10, 25, 50];
@@ -32,6 +40,8 @@ export class UsersTableComponent implements OnInit {
     this.dataSource.data = data;
   }
 
+  @Output() removeUser: EventEmitter<number> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -39,5 +49,9 @@ export class UsersTableComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  onRemoveUser(id: number): void {
+    this.removeUser.emit(id);
   }
 }
