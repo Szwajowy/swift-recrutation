@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { Subject, takeUntil } from 'rxjs';
+
 import { User } from '../../models/Users.model';
 import { UsersService } from '../../services/users.service';
 
@@ -17,9 +22,13 @@ export class UsersTableComponent implements OnInit {
     'region',
     'country',
   ];
-  dataSource: User[] = [];
+  dataSource = new MatTableDataSource<User>();
+  pageSizeOptions: number[] = [10, 25, 50];
 
   private destroy$ = new Subject();
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
   constructor(private usersService: UsersService) {}
 
@@ -28,8 +37,12 @@ export class UsersTableComponent implements OnInit {
       .getAllUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users) => {
-        this.dataSource = users;
+        this.dataSource.data = users;
       });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy(): void {
