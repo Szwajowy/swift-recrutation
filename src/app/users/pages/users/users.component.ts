@@ -11,22 +11,23 @@ import { UsersService } from '../../services/users.service';
 export class UsersComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   users!: User[];
+  loading = false;
 
   constructor(private usersService: UsersService) {}
 
-  ngOnInit(): void {
-    this.loadUsers();
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroy$.next(null);
   }
 
-  loadUsers(): void {
+  onLoadUsers(): void {
+    this.loading = true;
     this.usersService
       .getAllUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users) => {
+        this.loading = false;
         this.users = users;
       });
   }

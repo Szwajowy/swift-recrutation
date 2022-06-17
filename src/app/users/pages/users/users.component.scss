@@ -1,0 +1,19 @@
+.buttons-wrapper {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.6rem;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+
+  .center-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

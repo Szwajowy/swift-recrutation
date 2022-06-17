@@ -1,1 +1,11 @@
-<app-users-table [data]="users"></app-users-table>
+<div class="buttons-wrapper">
+  <button mat-raised-button color="primary" (click)="onLoadUsers()">
+    Load users
+  </button>
+  <button mat-raised-button color="accent">Add user</button>
+  <button mat-raised-button color="warn">Remove user</button>
+</div>
+<div class="content">
+  <app-users-table *ngIf="users" [data]="users"></app-users-table>
+  <mat-spinner class="center-spinner" *ngIf="loading"></mat-spinner>
+</div>
