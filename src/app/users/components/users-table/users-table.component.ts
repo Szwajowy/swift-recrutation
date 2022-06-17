@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { User } from '../../models/Users.model';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-users-table',
@@ -14,18 +17,22 @@ export class UsersTableComponent implements OnInit {
     'region',
     'country',
   ];
-  dataSource = [
-    {
-      id: 1,
-      name: 'Jan Kowalski',
-      email: 'jan.kowalski@gmail.com',
-      city: 'Katowice',
-      region: 'Śląsk',
-      country: 'Polska',
-    },
-  ];
+  dataSource: User[] = [];
 
-  constructor() {}
+  private destroy$ = new Subject();
 
-  ngOnInit(): void {}
+  constructor(private usersService: UsersService) {}
+
+  ngOnInit(): void {
+    this.usersService
+      .getAllUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((users) => {
+        this.dataSource = users;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(null);
+  }
 }
