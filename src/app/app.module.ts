@@ -12,6 +12,7 @@ import { UsersModule } from './users/users.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
     UsersModule,
   ],
   providers: [],
